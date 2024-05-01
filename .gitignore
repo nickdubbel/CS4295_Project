@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Our own project
-data/
+/data/

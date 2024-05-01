@@ -51,6 +51,13 @@ def tokenizing(raw_x, raw_y):
 
 #main function
 def main():
+
+    dataset_folder = "data/raw/DL Dataset/"
+
+    # check if there is data inside the folder
+    if not os.path.exists(dataset_folder):
+        raise FileNotFoundError(f"Dataset folder '{dataset_folder}' is empty")
+
     raw_x, raw_y = Split_dataset()
     char_index, x, y = tokenizing(raw_x, raw_y)
 

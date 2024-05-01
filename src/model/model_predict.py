@@ -29,6 +29,10 @@ def main():
 
     input_folder = "data/interim"
 
+    # check if model and load data exists
+    if not os.path.exists(input_folder):
+        raise FileNotFoundError(f"Input folder '{input_folder}' is empty")
+
     # Load model
     model = load(f'{input_folder}/model.joblib')
 
@@ -46,6 +50,7 @@ def main():
     dump(report, f'{output_folder}/report.joblib')
     dump(confusion_mat, f'{output_folder}/confusion_mat.joblib')
     print("Report and Confusion Matrix saved at output folder")
+
 
 if __name__ == "__main__":
     main()

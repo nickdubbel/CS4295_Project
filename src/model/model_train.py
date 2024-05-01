@@ -72,8 +72,13 @@ def model_train(x_train, y_train, x_val, y_val, char_index):
 #main function
 def main():
     
-    # load data
     input_folder = "data/interim"
+
+    # check if there is data inside the folder
+    if not os.path.exists(input_folder):
+        raise FileNotFoundError(f"Input folder '{input_folder}' is empty")
+    
+    # load data
     char_index = load(f'{input_folder}/char_index.joblib')
     x = load(f'{input_folder}/x_data.joblib')
     y = load(f'{input_folder}/y_data.joblib')
