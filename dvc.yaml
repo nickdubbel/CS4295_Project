@@ -1,0 +1,39 @@
+stages:
+  download_dataset:
+    cmd: python src/data/download_dataset.py
+    deps:
+    - src/data/download_dataset.py
+    outs:
+    - data/raw/DL Dataset/test.txt
+    - data/raw/DL Dataset/train.txt
+    - data/raw/DL Dataset/val.txt
+  preprocessing:
+    cmd: python src/preprocessing/preprocessing.py
+    deps:
+    - src/preprocessing/preprocessing.py
+    - data/raw/DL Dataset/test.txt
+    - data/raw/DL Dataset/train.txt
+    - data/raw/DL Dataset/val.txt
+    outs:
+    - data/interim/char_index.joblib
+    - data/interim/x_data.joblib
+    - data/interim/y_data.joblib
+  model_train:
+    cmd: python src/model/model_train.py
+    deps:
+    - src/model/model_train.py
+    - data/interim/char_index.joblib
+    - data/interim/x_data.joblib
+    - data/interim/y_data.joblib
+    outs:
+    - data/interim/hist.joblib
+    - data/interim/model.joblib
+  model_predict:
+    cmd: python src/model/model_predict.py
+    deps:
+    - src/model/model_predict.py
+    - data/interim/hist.joblib
+    - data/interim/model.joblib
+    outs:
+    - data/interim/confusion_mat.joblib
+    - data/interim/report.joblib
