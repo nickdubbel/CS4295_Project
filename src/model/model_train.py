@@ -1,12 +1,14 @@
-from joblib import dump, load
+"""This module trains the model."""
+
 import os
+from joblib import dump, load
 
 from keras.models import Sequential
 from keras.layers import Embedding, Conv1D, MaxPooling1D, Flatten, Dense, Dropout
 
 
 def model_train(x_train, y_train, x_val, y_val, char_index):
-   
+    """Trains the model with the given parameters and data."""
 
     params = {'loss_function': 'binary_crossentropy',
                         'optimizer': 'adam',
@@ -22,7 +24,7 @@ def model_train(x_train, y_train, x_val, y_val, char_index):
 
     model = Sequential()
     voc_size = len(char_index.keys())
-    print("voc_size: {}".format(voc_size))
+    print(f"voc_size: {voc_size}")
     model.add(Embedding(voc_size + 1, 50))
 
     model.add(Conv1D(128, 3, activation='tanh'))
@@ -66,18 +68,16 @@ def model_train(x_train, y_train, x_val, y_val, char_index):
                     shuffle=True,
                     validation_data=(x_val, y_val)
                     )
-    
     return model, hist
 
 #main function
 def main():
-    
+    """Trains the model and stores results in a folder."""
     input_folder = "data/interim"
 
     # check if there is data inside the folder
     if not os.path.exists(input_folder):
         raise FileNotFoundError(f"Input folder '{input_folder}' is empty")
-    
     # load data
     char_index = load(f'{input_folder}/char_index.joblib')
     x = load(f'{input_folder}/x_data.joblib')
@@ -85,7 +85,6 @@ def main():
 
     # train model
     model, hist = model_train(x[0], y[0], x[1], y[1], char_index)
-    
     output_folder = "data/interim"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
