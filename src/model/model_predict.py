@@ -1,10 +1,14 @@
-from joblib import dump, load
-import os
+"""This module uses the trained model to make predictions and evaluates the model's performance."""
 
-import numpy as np
+import os
+from joblib import dump, load
+
 from sklearn.metrics import classification_report, confusion_matrix,accuracy_score
+import numpy as np
+np.random.seed(0)
 
 def model_predict(x_test, y_test, model):
+    """Makes predictions using the trained model and determines model accuracy."""
     # predict
     y_pred = model.predict(x_test, batch_size=1000)
     print(y_pred)
@@ -26,7 +30,7 @@ def model_predict(x_test, y_test, model):
     return report, confusion_mat
 
 def main():
-
+    """Makes a prediction and stores results in a folder."""
     input_folder = "data/interim"
 
     # check if model and load data exists
