@@ -43,3 +43,14 @@ To set up the project, follow these steps:
     ```bash
     poetry run python main.py
     ```
+
+## Running pylint and dslinter
+1. Install pylint and dslinter:
+   ```bash
+   pip install pylint==2.13
+   pip install dslinter
+   ```
+2. Execute pylint with dslinter plugin:
+   ```bash
+   pylint --load-plugins=dslinter path\to\file.py
+   ```
